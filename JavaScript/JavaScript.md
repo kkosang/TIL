@@ -145,3 +145,108 @@ Else{
 	: condition은 boolean으로 판별
 
 ```
+
+# _2022-05-30 MON_
+
+## <em>3.0 The Document Object</em>
+
+- JavaScript는 HTML에 이미 연결되어 있음
+- 브라우저에서 제공하는 document 객체를 이용하여 JS에서 html의 항목을 읽거나 변경할 수 있음
+
+## 3.1 HTML in JavaScript
+
+- document.getElementById("");
+  - 인자값으로 id 작성 // string
+  - JavaScript에서 id를 통해 HTML의element를 가져올 수 있음
+- console.dir();
+  - element를 더 자세하게 보여줌
+  - 이름앞에 on이 붙어있으면 event listener임
+
+## 3.2 Searching For Elements
+
+```
+	document.getElementByClassName("");
+	document.getElementByTagName("");
+```
+
+- 이 경우 array의 형태로 return함 // object가 아니기 때문에 method() 사용 불가
+
+- document.querySelector("");
+  - element를 css방식으로 검색할 수 있음
+  - (".className tagName");
+  - 단 하나의 element를 return해줌
+  - _cf) 해당되는 모든 element를 return 하고 싶다면 .querySelectorAll 사용 // array형태_
+
+## 3.3~3.5 Events
+
+- 모든 event들을 JS가 listen할 수 있음
+- addEventListener("eventName ", call funcName );
+  - Event를 listen하기 위함
+  - listen하고 싶은 event이름
+  - event발생시 호출 하고 싶은 func 이름
+
+```
+const title = document.querySelector("div.hello h1");
+
+function handleTitleClick() {
+  title.style.color = "blue";
+}
+
+function handleTitleEnter() {
+  title.innerText = "Mouse is here !!";
+}
+
+function handleTitleLeave() {
+  title.innerText = "Mouse is gone..";
+}
+
+title.addEventListener("click", handleTitleClick);
+title.addEventListener("mouseenter", handleTitleEnter);
+title.addEventListener("mouseLeave", handleTitleLeave);
+
+```
+
+// click이벤트 발생시 title의 색상을 blue로 바꿈
+<br> // mouse이벤트 발생시 text 변경
+
+- 이벤트 사용 2가지 방식
+
+  - .addEventListener("event Name", func Name );
+    - .removeEventListener 하기에 더 편리함
+  - .onclick = func Name ;
+
+- window 이벤트 (JS에서 기본제공)
+  - window.addEventListener("resize", func Name)
+    - // resize 화면크기 바뀜
+      <br>//document의 body,head,title 이런것들은 중요하기 때문에
+      document.body.style~의 명령이 허용되지만, div같은것들은 호출이 안됨
+      <br> document로 호출하면 .body / .head / .title 사용가능
+  - window.addEventListener("on/offline", func Name) // WIFI 연결 여부
+
+## <em>3.6~3.8 CSS in Javascript</em>
+
+- element의 style을 JS에서 변경하는건 좋은 방법이 아님
+
+- 똑같은 raw string이 있을 때 변수를 만들어서 사용 할 것
+
+- .classList
+
+  - .className은 이전 class들을 보호하지 못하고 모든걸 교체함
+  - h1.classList.contains("clickedClass")
+  - clickedClass가 h1의 classList에 포함되는지 판별
+
+- toggle
+  - class name이 존재 하는지 확인
+  - class name이 존재한다면 toggle은 class name을 제거
+  - class name이 존재하지 않는다면 toggle은 class name을 추가
+
+```
+  const clickClass = "clicked";
+ if (h1.classList.contains(clickClass)) {
+    h1.classList.remove(clickClass);
+  } else {
+    h1.classList.add(clickClass);
+  }
+// toggle 내용
+=== h1.classList.toggle("clicked");
+```
