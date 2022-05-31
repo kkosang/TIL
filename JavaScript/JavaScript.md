@@ -250,3 +250,33 @@ title.addEventListener("mouseLeave", handleTitleLeave);
 // toggle 내용
 === h1.classList.toggle("clicked");
 ```
+
+# _2022-05-31 TUE_
+
+## 4.0 Input Values
+
+- input의 내용을 가져오려면 value property사용
+- html에서 value값 설정 시 input의 값을 미리 설정
+
+## 4.1 Form Submission
+
+- user의 input값을 유효성 검사를 하기 위해서 input이 form안에 있어야함
+- form안에 있는 btn을 누르거나 input의 type이 submit일 경우
+  - form이 submit될 때 마다 브라우저는 페이지를 새로고침 함
+
+## 4.2~4.3 Events
+
+- 모든 EventListener func의 첫번째 argument는 항상 지금 막 벌어진 일들에 대한 정보 담고있음 - 정보를 얻기 위해선 첫번째
+  parameter를 설정
+- preventDefault( )
+  - 어떤 event의 기본 행동이든지 발생되지 않도록 막음
+  - 기본 행동이란 어떤 func에 대해 브라우저가 기본적으로 수행하는 동작임 // form을 submit하면 브라우저가 기본적으로 페이지를 새로고침하는 동작
+
+```
+function onLoginSubmit(event) {
+  event.preventDefault(); //페이지 새로고침 막아줌
+  console.log(loginInput.value);
+}
+
+loginForm.addEventListener("click", onLoginSubmit);
+```
