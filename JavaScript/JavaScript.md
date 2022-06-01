@@ -280,3 +280,79 @@ function onLoginSubmit(event) {
 
 loginForm.addEventListener("click", onLoginSubmit);
 ```
+
+# _2022-06-01 WED_
+
+## 4.4 Getting Username
+
+- 일반적으로 string만 포함된 변수는 대문자 표기 // string을 저장하고 싶을 때
+- display:none;과 visibility:hidden; 차이점
+  - visibility:hidden; // 공간은 그대로 두고 보이지만 않음
+  - display:none; // 공간도 사라짐
+- string과 변수를 합치는 방법
+  - "Hello " + username;
+  - \`Hello ${username}`;
+
+## 4.5 Saving Username
+
+- local storage
+  - 브라우저에 데이터를 저장할 수 있게 해줌
+  - localStorage.setItem(" ", ); // key(저장될 값의 이름)와 value
+  - localStorage.getItem(" ");
+  - localStorage.removeItem(" ");
+
+## 4.6 Loading Username
+
+```
+const savedUsername = localStorage.getItem(USERNAME_KEY);
+
+if (savedUsername === null) { // 저장된 이름이 없을 경우
+  loginForm.classList.remove(HIDDEN_CLASSNAME); // form을 보여주고
+  loginForm.addEventListener("submit", onLoginSubmit); // submit이벤트
+} else { // 저장된 이름이 있을 경우
+  paintGreetings(savedUsername); // 저장된 이름을 화면에 출력
+}
+```
+
+## 4.7 Recap
+
+## 5.0 Intervals
+
+- '매번' 일어나야 하는 무언가를 뜻함
+  // 매 n초마다
+- setInterval( arg1, arg2 );
+  - arg1 // 호출하고자 하는 func
+  - arg2 // 호출하는 func 간격 ms
+
+## 5.1 Timeouts and Dates
+
+- setTimeout( arg1, arg2 );
+  - func를 일정 시간이 흐른뒤에 한번만 호출
+  - arg1 // 호출하고자 하는 func
+  - arg2 // 몇ms후 func를 호출할지
+- new Date()
+  - 날짜나 시간을 보여주는 object
+  - date.getHours(); // 시간
+  - date.getMinutes(); // 분
+  - date.getSeconds(); // 초
+
+```
+function getClock() {
+  const date = new Date();
+  clock.innerText = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}
+
+getClock(); //1초를 안기다리고 호출하기 위함
+setInterval(getClock, 1000);
+```
+
+## 5.2 PadStart
+
+- padStart(arg1, arg2);
+  - pads the current string with a given string
+  - string에 쓸 수 있는 func
+  - arg1 // string의 길이를 맞춰줌
+  - arg2 // arg1의 길이를 충족하지 못한다면 string의 앞쪽에 arg2의 string을 채워줌
+  - _cf) padEnd(arg1, arg2); // 뒤쪽에 string 채워줌_
+
+## 5.3 Recap
