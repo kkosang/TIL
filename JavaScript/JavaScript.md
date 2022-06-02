@@ -356,3 +356,80 @@ setInterval(getClock, 1000);
   - _cf) padEnd(arg1, arg2); // 뒤쪽에 string 채워줌_
 
 ## 5.3 Recap
+
+# _2022-06-02 THU_
+
+## 6.0 Quotes
+
+- Math.random()
+  - 0부터 1사이의 랜덤 숫자 제공
+- Math.round()
+  - 숫자를 반올림 시켜줌
+- Math.Ceil()
+  - 올림
+- Math.floor()
+  - 내림
+
+## 6.1 Background
+
+- js이용해서 html파일에 랜덤이미지 추가하기
+- document.createElement(arg1);
+  - create an instance of the element
+  - arg1 // tagName
+
+```
+//make array
+const images = ["0.jpeg", "1.jpeg", "2.jpeg", "3.jpg", "4.jpg", "5.jpg"];
+// choose random images
+const chosenImage = images[Math.floor(Math.random() * images.length)];
+// make tag => <img>
+const bgImage = document.createElement("img");
+// make src => <img src="img/">
+bgImage.src = `img/${chosenImage}`;
+// append html body
+document.body.appendChild(bgImage); // prepend 가장 위에 생성
+```
+
+## 6.2 Recap
+
+## 7.0 Setup
+
+```
+const toDoForm = document.getElementById("todo-form");
+const toDoInput = toDoForm.querySelector("input");
+const toDoList = document.getElementById("todo-list");
+
+function handleToDoSubmit(event) {
+  event.preventDefault();
+  const newTodo = toDoInput.value;
+  toDoInput.value = "";
+}
+
+toDoForm.addEventListener("submit", handleToDoSubmit);
+```
+
+## 7.1 Adding ToDos
+
+```
+//submit event에서 발생한 value의 값을 html에 만들기
+function paintToDo(newToDo) {
+  //html에 <li>만들기
+  const li = document.createElement("li");
+  // html에 <span>만들기
+  const span = document.createElement("span");
+  // html <li> <span></span> </li> 만들기
+  li.appendChild(span);
+  // text를 span에 넣음
+  span.innerText = newToDo;
+  // todo-list에 방금 만들 li를 집어넣기
+  toDoList.appendChild(li);
+}
+
+//발생 event를 parameter로 받음
+function handleToDoSubmit(event) {
+  event.preventDefault();
+  const newToDo = toDoInput.value;
+  toDoInput.value = ""; // input을 비워주기 위함
+  paintToDo(newToDo);
+}
+```
