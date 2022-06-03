@@ -433,3 +433,68 @@ function handleToDoSubmit(event) {
   paintToDo(newToDo);
 }
 ```
+
+# _2022-06-03 FRI_
+
+## 7.2 Deleting To Dos
+
+- event.target // 이벤트가 발생 했을 때 해당 객체를 알 수 있음
+  - event.target.parentElement // 해당 객체의 부모 태그를 알 수 있음
+
+```
+// click event발생시 deleteToDo func 호출
+function deleteToDo(event) {
+  // event를 불러와야 path를 통해 어떤 버튼이 클릭 됐는지 알 수 있음
+  const li = event.target.parentElement;
+  li.remove();
+}
+```
+
+## 7.3 Saving To Dos
+
+- todo-list에 나타난 텍스트를 저장하는 기능이 필요하다
+- localstorage에 array저장 불가 // only text
+
+- todo-list의 배열 생성
+  - const toDos = []; // toDo에 들어오는 텍스트를 배열로 묶어 보관하기 위해 빈 array 생성해준다
+- JSON.stringify( )
+  - JS object나 array나 어떤 것이든 string으로 바꿔주는 기능
+
+## 7.4~7.5 Loading To Dos part
+
+- JSON.parse("")
+
+  - string을 JS object로 만들어줌
+
+- .forEach( funcName )
+  - 배열 각각의 원소에 func실행 방법 //배열 순회
+  - function funcName (item) { }
+    - 배열의 현재 item의 정보를 알 수 있음
+    - 더 좋은 방법은 arrow func을 이용하는방법 - .forEach( (item) => console.log(item));
+
+## 7.6~7.8 Deleting To Dos
+
+- To Do를 지울 때 마다 local storage를 업데이트 하지 않음 이걸 수정할거임
+- 어떤 item을 지워야 할 지 알 수 없음
+  - 화면에서는 어떤 element를 지워야 하는지 알고 있지만 DB에서는 어떤 item을 지워야 하는지 모름
+  - text대신에 object로 만들어서 id 부여
+    - Date.now()를 통해서 id에 랜덤 숫자를 부여
+- array에서 어떤 item을 지울 때 실제로 item을 지우지 않음
+  - 지우고 싶은 item을 제외하고 새로운 array를 다시 만듬
+  - .filter(arg)를 이용하여 item을 제외 시킬 수 있음
+    - arg : true를 retrun하는 func name
+    - 만약 func가 false를 return한다면 그 배열의 원소를 새 array에 포함시키지 않음
+    - array의 각 원소를 func의 arg로 호출함
+
+```
+function filterFunc (item){
+return item !==3;
+}
+
+[1,2,3,4].filter(filterFunc)
+
+filterFunc(1) = 1 // true
+filterFunc(2) = 2 // true
+filterFunc(3) 	   // false
+filterFunc(4) = 4 // true
+```
