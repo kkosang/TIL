@@ -498,3 +498,30 @@ filterFunc(2) = 2 // true
 filterFunc(3) 	   // false
 filterFunc(4) = 4 // true
 ```
+
+# _2022-06-05 SUN_
+
+## 8.0 Geolocation
+
+- 유저의 위치를 가져오는 방법
+  -     navigator.geolocation.getCurrentPosition(arg1, arg2);
+    - arg1 : 성공했을 때 func 실행
+    - arg2 : 에러가 발생했을 때 func 실행
+
+## 8.1 Weather API
+
+- Current weather data를 API로 가져오기 - API 호출 후 latitude , longitude , API key 적을 것
+- fetch( url ) // promise
+  - JS가 URL 요청하기 위함
+  - promise는 당장 일어나지 않고 시간이 걸린 뒤에 일어남 // 서버의 응답시간
+
+```
+fetch(url)
+    .then((Response) => Response.json())
+    .then((data) => {
+      const weather = document.querySelector("#weather span:first-child");
+      const city = document.querySelector("#weather span:last-child");
+      city.innerText = data.name;
+      weather.innerText = `${data.weather[0].main} / ${data.main.temp} °C `;
+    });
+```
