@@ -71,3 +71,72 @@
   - scripts에 nodemon 추가
     - "nodemon --exec babel-node index.js" // index.js를 수정할 때 마다 최신코드로 실행
     - Ctrl + c로 nodemon 종료가능
+
+# _2022-06-08 WED_
+
+## <em>3.0 Your First Server</em>
+
+```javascript
+import express from "express"; // "express"라는 node_modules안에 있는 package를 express라는 이름으로 import
+
+const app = express(); // express func를 사용하여 express application생성
+
+const handleListening = () => console.log("Server listening on port 3188");
+
+app.listen(3188, handleListening); // port번호와 callback함수
+```
+
+- localhost:portNumber로 서버에 접속 할 수 있음
+
+## <em>3.1~3.2 GET Requests</em>
+
+- Cannot GET /
+  - / 서버의 root, 첫 페이지
+  - GET은 HTTP method
+    - 우리와 서버가 소통 or 서버가 서로 소통하는 방법
+    - 가장 안정적이고, 오래되고 처음 사용된 방식
+    - 브라우저가 웹사이트를 request하고 페이지를 가져다 줌
+    - 여러 종류의 request중 하나
+- app.get("/",callbackfunc)
+  - 누군가 home으로 get request를 보낸다면, callbackfunc 호출
+
+## <em>3.3 Responses</em>
+
+```javascript
+const handleHome = (req, res) => {
+  console.log(req);
+}; // parameter1 : request object , parameter2 : response object / 반드시 parameter 2개가 필요
+```
+
+- request는 브라우저가 뭔가를 요청 함
+  - 쿠키나 method 같은 정보를 얻을 수 있음 // 이 경우엔 GET method
+- return res.end();
+  - request를 종료 시키는 여러 방법 중 하나
+
+## <em>3.4 Recap</em>
+
+- request를 받으면 response을 받을 때 까지 실행
+- express( )
+  - Application
+  - Request
+  - Response
+
+## <em>3.5~3.6 Middlewares</em>
+
+- 브라우저가 request한 후 서버에서 response하기 전에 그 사이에 middleware가 존재
+- response하지 않고 다음 func에게 넘기는 func임
+- middleware는 3개의 parameter를 가짐
+  - par1 : request
+  - par2 : response
+  - par3 : next
+- 모든 controller는 middleware가 될 수 있다 // controller가 next함수를 호출하면 middleware
+- .get( )
+
+  - par1 : path
+  - par2~n : handlers
+
+- .use( )
+
+  - global middleware를 만들 수 있게 해줌 // 어느 url에도 작동
+
+  - middleware는 순서가 중요함
