@@ -140,3 +140,54 @@ const handleHome = (req, res) => {
   - global middleware를 만들 수 있게 해줌 // 어느 url에도 작동
 
   - middleware는 순서가 중요함
+
+# _2022-06-09 THU_
+
+## <em>3.7 Setup Recap</em>
+
+- package.json
+  - text 파일
+- script
+  - scripts entry 생성하고 script를 입력하면 npm run scriptName을 사용
+- dependencies
+  - 프로젝트가 실행되기 위해 필요함
+- devDependencies
+  - 좀 더 편리한 개발환경을 위해
+  - nodemon
+    - 파일의 변화가 생기면 commend 재시작
+  - balbel
+    - ES6를 사용하기 위해
+    - ES6 -> 평범한 node.js 방식 -> node.js 서버 작동
+    - babel.config.json 파일 설정 // plugin추가
+
+## <em>3.8 Servers Recap</em>
+
+- server
+  - 서버는 항상 켜져 있고, 인터넷에 연결 돼 있으면서 req를 listen하고 있음
+  - request는 브라우저를 통해 웹사이트에게 하는 모든 상호작용
+- import express
+- create app variable
+  - const app = express( );
+- request listen
+  - app.listen(PORT, handleListening);
+  - 서버가 PORT 번호만 listen
+- handleListening
+  - listening이 시작되면 호출되는 함수
+- 브라우저가 서버에게 페이지를 request
+
+## <em>3.9 Controllers Recap</em>
+
+- controller
+  - 모든 controller에는 request와 response가 존재 + next
+- 모든것들이 route를 만들고 그 route를 다룸 // controllers로
+- arrow function은 return을 포함한다
+  - const handleHome = (req,res) => res.end()
+  - const handleHome = (req,res) => { return res.end() } - 둘이 같음
+
+## <em>3.10 Middleware Recap</em>
+
+- request와 response 중간에 있는 software
+- parameter로 req, res, next를 가짐
+- 요청을 응답하거나 next로 다음 함수에게 넘겨줌
+- 관습적으로, 응답을 해주는 마지막 controller에는 next를 안씀
+- middleware를 global하게 사용하고 싶으면 app.use( )를 이용할것 // 단 , 순서 중요함
