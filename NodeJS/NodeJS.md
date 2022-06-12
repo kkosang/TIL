@@ -191,3 +191,65 @@ const handleHome = (req, res) => {
 - 요청을 응답하거나 next로 다음 함수에게 넘겨줌
 - 관습적으로, 응답을 해주는 마지막 controller에는 next를 안씀
 - middleware를 global하게 사용하고 싶으면 app.use( )를 이용할것 // 단 , 순서 중요함
+
+# _2022-06-12 SUN_
+
+## 3.11 External Middlewares
+
+- morgan
+  - node.js용 request logger middleware를 return 해줌
+  - cf) https://www.npmjs.com/package/morgan
+  - morgan("dev")
+    - GET, URL, status code, 응답시간
+
+## <em>4.0 What are Routers?</em>
+
+- Router
+  - url의 시작부분
+  - controller와 url의 관리를 쉽게 해줌
+  - URL들을 그룹화 시킴
+  - 글로벌 라우터 / 유저 라우터 / 비디오 라우터 처럼 그룹화
+
+## <em>4.1 Making Our Routers </em>
+
+- url을 깔끔하게 만들면 마케팅하는데도 도움이 됨
+- app.get("/", homeRouter )
+  - 사용자가 GET요청을 보내면 요청이 homeRouter로 라우팅됨
+- const homeRouter = express.Router()
+  - 다음과 같이 homeRouter라는 상수 변수를 생성함
+- const handleReq = (req, res) => res.send("Do something");
+  - 다음과 같이 핸들러 함수 생성
+- routerOne.get("/",handleReq);
+  - 라우터를 핸들러에 연결
+- 사용자가 URL "/"을 GET하도록 요청하면 사용자는 express앱에서 라우터 homeRouter, 핸들러 함수 handleReq으로 라우팅 됨
+
+## <em>4.2 Cleaning the Code</em>
+
+- JS파일은 각자 독립적임 // 하나의 모듈
+- import를 하기전에 export를 해줘야 함
+  - export default globalRouter;
+  - 파일 전체를 export한게 아니라 globalRouter(변수)만 export
+
+## <em>4.3 Exports </em>
+
+- 컨트롤러는 함수
+- 라우터는 그 함수를 사용하는 입장
+- 따라서 둘이 같은 곳에 두지 말것
+- export default로는 한가지 밖에 못함
+- 여러개를 export 하기 위한 방법
+
+```javascript
+export const trending = (req, res) => res.send("Home Page Videos");
+export const watch = (req, res) => res.send("Watch");
+export const edit = (req, res) => res.send("Edit");
+```
+
+- import를 하기 위한 방법
+  - object사용
+
+```javascript
+import { edit, watch } from "../controllers/videoController";
+```
+
+- export default 와 export const의 차이점 - import 할 때 default는 사용자가 원하는 이름을 사용할 수 있지만
+  const는 실제 이름을 그대로 써야 함
