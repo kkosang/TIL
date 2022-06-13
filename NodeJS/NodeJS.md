@@ -253,3 +253,23 @@ import { edit, watch } from "../controllers/videoController";
 
 - export default 와 export const의 차이점 - import 할 때 default는 사용자가 원하는 이름을 사용할 수 있지만
   const는 실제 이름을 그대로 써야 함
+
+# _2022-06-13 MON_
+
+## <em>4.4 Router Recap</em>
+
+- 공통 시작부분을 기반으로 url을 정리해주는 방법
+
+## <em>4.5 Architecture Recap</em>
+
+- 변수를 다른 파일에서 가져옴
+- 한가지만 공유 할 때
+  - export default
+  - import시 이름을 사용자 마음대로 정의 할 수 있음
+- 한가지 이상을 공유 할 때
+  - export
+  - import시 이름을 오브젝트안에 같은 이름을 사용해야 함
+
+## <em>4.6 Planning Routes</em>
+
+- 각 기능에 따라 Router와 Controller 연결
