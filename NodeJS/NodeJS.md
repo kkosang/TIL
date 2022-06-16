@@ -273,3 +273,47 @@ import { edit, watch } from "../controllers/videoController";
 ## <em>4.6 Planning Routes</em>
 
 - 각 기능에 따라 Router와 Controller 연결
+
+# _2022-06-16 THU_
+
+## <em>4.7~4.8 URL Parameters</em>
+
+- /:
+  - parameter
+  - url안에 변수를 포함 시킬 수 있음
+  - express한테 변수라는고 알려줌
+  - 변수의 이름은 아무거나 써도 상관 없음
+
+```javascript
+videoRouter.get("/upload", upload);
+videoRouter.get("/:id", see);
+videoRouter.get("/:id/edit", edit);
+```
+
+    - upload와 see의 순서 중요
+    - 위에서부터 코드를 읽기 때문에 upload가 :id밑으로 가게되면 express가 uplaoad를 id로 인식하게 됨
+
+- express 정규식
+  - 문자열로부터 특정 정보를 추출해내는 방법
+  - 숫자만 선택하는 방법
+    - (\d+) // digit
+
+## <em>5.0 Returning HTML</em>
+
+- HTML을 return하는데 2가지 옵션이 있음
+  - 1.  그냥 HTML의 문자열을 써서 보내는 방법 // 좋은 방법이 아님 / 긴급상황에 가끔 필요
+  - 2.  PUG사용 // 코드 복붙 할 필요 없어짐 // Template Engine // html helper
+
+## <em>5.1 Configuring Pug</em>
+
+- npm i pug // pug 설치
+- app.set("view engine", "pug"); // view engine으로 pug설정
+- pug 파일 생성
+  - views폴더에서 express가 뷰를 찾음
+  - process.cwd() + '/views' // current working directory
+- 작동 방식
+  - 파일을 pug에게 보내고 pug가 파일을 렌더링해서 평범한 html로 변환
+- cwd()는 서버를 기동하는 파일의 위치에 따라 결정됨 // 어디서 노드를 부르고 있는지에 따라 결정
+  - node.js를 실행하는 디렉토리
+  - package.json
+- app.set("views", process.cwd() + "/src/views"); // view 설정 바꾸기
