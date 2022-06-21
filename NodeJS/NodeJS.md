@@ -317,3 +317,44 @@ videoRouter.get("/:id/edit", edit);
   - node.js를 실행하는 디렉토리
   - package.json
 - app.set("views", process.cwd() + "/src/views"); // view 설정 바꾸기
+
+# _2022-06-21 TUE_
+
+## <em>5.2 Partials </em>
+
+- 변경사항이 생기면 모든 페이지에서 수정 할 필요 없이 partials폴더 만들고 그 안에 반복되는 내용을 파일로 만듬
+- include partials/footer.pug와 같이 파일을 include 해주기만 하면 됨
+- pug 사용 하는 이유
+  - 깔끔한 html 작성 가능
+  - html에 JS를 포함 시킬 수 있음
+  - 반복하지 않고 파일로 모든 템플릿을 업데이트 할 수 있음
+
+## <em>5.3 Extending Templates</em>
+
+- inheritance
+  - 일종의 base개념
+  - 레이아웃의 베이스, HTML의 베이스
+- extends
+  - html의 베이스를 가질 수 있게 해줌 // 베이스가 되는 파일을 가져다 그대로 씀
+  - 파일을 확장하기 위해
+  - // block을 이용하여 원하는 부분만 수정 가능
+  - 확장하고 싶은 파일에 가서 // extends 파일명.pug
+- block
+  - 템플릿 안에 내용을 넣을 수 있음
+  - 템플릿의 창문 같은느낌 ( 공간 마련 )
+  - 블록을 만드는 방법
+    - block blockName
+      - 수정내용
+
+## <em>5.4 Variables to Templates</em>
+
+- 템플릿에 변수를 사용하기
+  - #{VariableName} // JS의 변수를 사용하기 위함
+- 템플릿으로 변수 보내기
+  - 누가 템플릿을 렌더링하고 있는지 파악 // 컨트롤러
+
+```javascript
+export const trending = (req, res) =>
+  res.render("home", { pageTitle: "Comes from your controller" });
+// render함수는 2가지 parameter를 가짐 / view와 템플릿에 보낼 변수들
+```
