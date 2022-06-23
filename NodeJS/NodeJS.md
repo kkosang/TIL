@@ -358,3 +358,68 @@ export const trending = (req, res) =>
   res.render("home", { pageTitle: "Comes from your controller" });
 // render함수는 2가지 parameter를 가짐 / view와 템플릿에 보낼 변수들
 ```
+
+# _2022-06-23 THU_
+
+## <em> 5.5 Recap </em>
+
+## <em>5.6 MVP Styles</em>
+
+- MVP.css // middleware
+  - HTML 태그에 몇가지 기본 스타일을 입혀줌
+
+```css
+link(rel="stylesheet" href="http://unpkg.com/mvp.css")를 추가하여 사용
+```
+
+## <em>5.7 Conditionals</em>
+
+- = variable을 쓰면 #{variable}과 같음
+  - #{variable}은 변수와 text를 같이 사용할 때
+  - = variable은 오직 변수만 사용할 때
+
+## <em>5.8 Iteration</em>
+
+- 리스트, 즉 array가 필요함
+- elements의 list를 보여줌
+- each 보여주고 싶은 variable 이름
+
+```javascript
+each video in videos
+            li=video
+// videos array안의 각 element에 대해서 list item을 만들어서 그 안에 넣어줌
+// video는 loop상의 현재 값이라 이름 아무렇게나 해도 상관 없음
+// videos는 controller 부분의 이름과 같아야 함
+// 통상적으로 each 단수 in 복수 형태로 사용
+```
+
+- error
+  - Cannot read property 'length' of undefined
+    // each X in Y를 할 때 Y가 undefined이라는 뜻
+
+## <em>5.9 Mixins</em>
+
+- 데이터를 받을 수 있는 partial을 뜻함
+- 같은 형태를 지니지만 서로 다른 데이터를 가져야 할 때 사용
+- mixin파일
+
+```pug
+mixin video(info)
+  div
+      h4=info.title
+           ul
+                li  #{info.rating}/5.
+                li #{info.comments} comments.
+                li Posted #{info.createdAt}.
+                li #{info.views} views.
+```
+
+- mixin사용
+
+```pug
+include mixins/video
+each item in videos
+          +video(item)
+        else
+            li Sorry nothing found.
+```
