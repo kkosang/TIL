@@ -86,6 +86,33 @@ selector {property} // html을 가리키고 속성 적용 from TOP to BOTTOM // 
 =>#idname 사용
 ```
 
+# 2022-06-25 SAT
+
 - inline-block
   : display : inline-block을 사용하면 box들이 양 옆에 놓일 수 있음
-  - 반응형 디자인을 지원하지 않음!
+  // 반응형 디자인을 지원하지 않음!
+
+- flexbox
+  : 박스들을 원하는곳에 놓을 수 있음
+
+  - rule
+    - 1. 자식 엘리먼트에는 어떠한것도 적지 X // 부모 엘리먼트에만 말함 //부모에게 명시 display:flex;
+    - 2. justify-content: flex-start; 가 기본값
+    - 3. main axis / cross axis ( 수평, 수직 축) 메인축, 교차축
+      - justifiy-content ( main axis에 적용)
+      - aline-items ( croos axis에 적용)
+      - 기본값: 주축= 수평 / 교차축= 수직
+      - align-items을 이용하기 위해서는 부모의 height를 지정해줘야 하는데 이때 100vh를 이용하여 (viewpoint height) 반응형 웹을 만들어 줄 수 있음
+      - main axis와 cross axis를 바꾸기 위해서는 flex-direction column으로 설정하면 바뀜
+      - flex-direction 은 기본 값으로 row를 가짐
+
+- position
+  : 레이아웃 보다는 위치를 아주 조금씩 옮길 때 사용
+  - position: fixed // 처음 레이아웃한 위치에서 고정
+  - 모든 레이어보다 가장 위에 있음
+  - top: px;을 설정해주면 다른 레이어로 변경 됨 // 즉 box끼리 겹칠 수 있음
+  - static : 레이아웃이 처음 위치한 곳에 설정 (디폴트)
+  - relative : 처음위치에서 아주 조금씩 옮기기 위함
+  - absolute : 가장 가까운 relative부모 기준으로 옮겨줌
+    - 부모가 relative가 아니면 그 다음 부모가 relative인지 확인 전부 relative가 아닐경우 body가 부모가 됨
+    - 따라서 제대로 적용하기 위해서는 작성하고자 하는 클래스 부모에 relative를 설정해 준 뒤 사용
