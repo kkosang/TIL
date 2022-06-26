@@ -116,3 +116,37 @@ selector {property} // html을 가리키고 속성 적용 from TOP to BOTTOM // 
   - absolute : 가장 가까운 relative부모 기준으로 옮겨줌
     - 부모가 relative가 아니면 그 다음 부모가 relative인지 확인 전부 relative가 아닐경우 body가 부모가 됨
     - 따라서 제대로 적용하기 위해서는 작성하고자 하는 클래스 부모에 relative를 설정해 준 뒤 사용
+
+# _2022-06-26 SUN_
+
+- pesudo selectors
+  : 특별하게 지정할 수 있음
+
+  - tagname : attribute{ }
+  - id나 class를 만드는것보다 훨씬 좋은 코드
+  - first-child() / last-child() / nth-child()
+  - nth-child(even/odd/2n+1 ... 모든수식
+
+- Combinators ( 바로 밑 자식 > // 바로 형제 + )
+  : 부모와 자식으로 지정함
+
+  - 부모tagname 자식tagname { }
+  - 부모 밑에 같은 태그의 여러 자식이 있을 경우
+    - 부모tagname > 자식tagname을 하면 부모 바로 밑 자식에게 적용 할 수 있음
+  - 형제태그
+    - 형제 tagname + 대상 tagname을 하면 형제태그 다음에 오는 대상태그에 적용
+
+- pesudo selectors part two
+
+  - 형제 바로 뒤에 오지 않을때
+    - 형제 ~ 대상을 하면 형제태그 바로 다음이 아니여도 적용 가능 _여러개의 형제에도 적용 가능_
+  - 포함하고 있을 때
+    - input[placeholder~="name"] { } // name을 포함하고 있으면 적용
+
+- Colors and Variables
+  : 색상 표현과 변수 사용
+- CSS에서 색상은 3가지 방식으로 표현 됨
+  - 1. 16진수 #FE3O03 // #fff 블랙 #000화이트
+  - 2. RGB(252,206,0); // rgba a=> 투명도 0~1
+  - 3. 변수 :root { } // 모든 document의 출발점
+    - 변수 사용시 var(--변수명)
