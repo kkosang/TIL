@@ -423,3 +423,61 @@ each item in videos
         else
             li Sorry nothing found.
 ```
+
+# _2022-07-01_
+
+## <em>5.10 Recap</em>
+
+- iteration
+  - array의 모든 element에 대해 특정 행동을 취할 때 사용
+  - each x in y의 형태로 사용
+    - y가 우리가 가지고 있는 array
+  - else
+    - 배열안에 element가 없을 경우 사용
+- mixin
+  - 다른 데이터를 포함하면서 똑같은 형태의 html을 반복할 때 사용
+  - each x in y의 형태
+    - y는 우리가 만든 object
+    - x는 object 각각의 item에 접근
+
+## <em>6.0~6.1 Array Database </em>
+
+- back end에 데이터를 보내는 방법
+  - data를 post한 후에 database에 추가
+- #{ } 방식은 attribute에서 사용불가
+  - 따라서 `${}` // JS방식 사용
+
+```javascript
+ a(href=`/videos/${video.id}`)=video.title
+```
+
+- ternary operator
+  - #{video.views === 1 ? "view" : "views"}
+- absolute와 relative url
+  - url에 "/aaa" // absolute url
+    - root 경로 + /aaa로 이동
+  - url에 "aaa" // relative url
+    - 이전 경로 + 현재경로를 /aaa로 바꿔줌 // 끝 부분 변경
+
+## <em>6.2~6.3 Edit Video</em>
+
+- form(action="")
+  - data를 어디로 보낼지 정함
+  - 값으로 url을 가짐
+- method
+  - form과 back end사이의 정보 전송에 관한 방식
+  - 기본값으로 method는 GET
+    - 주로 검색할 때 사용
+    - form의 정보가 url에 들어감
+  - method POST
+    - 파일을 보내거나 , DB의 값을 바꾸고 싶을 때
+- get request와 post request의 차이점
+  - get form을 화면에 보여줌
+  - post form의 변경사항을 저장해줌
+- res.redirect(); // url
+  - 브라우저가 자동으로 이동하도록 함
+- express.urlencoded([options])
+  - application이 form의 body를 이해 하도록 해줌
+  - app.use(express.urlencoded({ extended: true })); - middleware를 route 사용하기 전에 사용
+    - express app이 form의 value들을 이해할 수 있도록 하고 JS형식으로 변형 시켜줌
+- req.body
