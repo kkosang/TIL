@@ -424,7 +424,7 @@ each item in videos
             li Sorry nothing found.
 ```
 
-# _2022-07-01_
+# _2022-07-01 FRI_
 
 ## <em>5.10 Recap</em>
 
@@ -481,3 +481,69 @@ each item in videos
   - app.use(express.urlencoded({ extended: true })); - middleware를 route 사용하기 전에 사용
     - express app이 form의 value들을 이해할 수 있도록 하고 JS형식으로 변형 시켜줌
 - req.body
+
+# _2022-07-03 SUN_
+
+## <em> 6.4 Recap </em>
+
+- req.body에서 내용을 읽어 오려면 모든 input에 name을 넣어줘야함
+
+## <em> 6.5~6.6 More Practice </em>
+
+- Make getUpload, postUpload controller
+- What is the thing that execute a controller ?
+  - route // videoRouter
+- videoRouter.get("/upload", getUpload);
+  - import getUpload
+- videoRouter.post("/upload",postUpload);
+- Make link : /upload
+  - base.pug
+    - a(href="/videos/upload") Upload Video
+- Make pug : upload.pug
+  - extends base.pug
+- Make form
+  - block content  
+    form(method="POST")
+    input(placeholder="Title", required,type="text" name="title")
+    input(type="submit", value="Upload Video")
+  - 현재의 url로 post request를 보냄
+    - action을 이용하여 다른 url로 전송가능
+- Get Data
+  - req.body
+    - input의 name이 없다면 비어 있음
+- Push Data
+  - const newVideo = { title: req.body.title, id: videos.length+1};
+  - videos.push(newVideo)
+
+## <em>6.7 Introduction to MongoDB</em>
+
+- document-based( 문서 기반 )
+  - 보통 DB는 sql-based( 행 기반 )
+  - 저장물은 JSON-like-document
+
+## <em>6.8 Connecting to Mongo</em>
+
+- mongoose
+  - node.js와 mongoDB를 이어줌 // package
+  - mongoDB와 대화 할 수 있게 해줌
+  - npm i mongoose
+- mongod: MongoDB 시스템의 기본 데몬 프로세서 (서버와 같은 느낌)
+- mongo: MongoDB에 대한 쉘 인터페이스 (클라이언트 같은 느낌)
+- 그래서 mongod로 서버를 키고 -> mongo로 인터페이스를 실행하여 mongoDB와 소통한다
+- Mongo연결
+  - db.js 생성
+  - import mongoose
+  - mongoose.connect(" mongo url/nameofyourdb " ) // mongodb에 새로운 db 만들기
+- 서버에서 db파일 사용
+  - 파일 자체를 import
+  - import "./db";
+  - import되는 순간 자동적으로 실행됨
+- db의 연결 성공여부나 에러 출력
+
+```javascript
+const handleOpen = () => console.log("Connected to DB👌");
+db.on("error", (error) => console.log("DB Error", error));
+db.once("open", handleOpen);
+//	- on : 여러번 계속 발생할 수 있음
+//	- once : 오로지 한번만 발생
+```
