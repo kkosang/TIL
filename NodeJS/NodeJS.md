@@ -547,3 +547,74 @@ db.once("open", handleOpen);
 //	- on : 여러번 계속 발생할 수 있음
 //	- once : 오로지 한번만 발생
 ```
+
+# _2022-07-08 FRI_
+
+## <em>6.9 CRUD Introduction</em>
+
+- Create
+- Read
+- Update
+- Delete
+- DB에게 data가 어떻게 생겼는지 알려주기 위해 model을 만듬
+
+## <em>6.10 Video Model</em>
+
+- import mongoose
+
+```javascript
+import mongoose from "mongoose";
+```
+
+- model schema
+  - 데이터의 형식 지정 // shape of the data
+
+```javascript
+const videoSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  createdAt: Date,
+  hashtags: [{ type: String }],
+  meta: {
+    views: Number,
+    rating: Number,
+  },
+});
+```
+
+- create model
+
+```javascript
+const movieModel = mongoose.model("Video", videoSchema);
+// name of the model, name of the schema
+```
+
+- export default
+  - 다른 파일에 video를 import 하기 위함
+- init.js파일에 video파일 import
+  - import "./models/Video"; // db를 import 한 후에 해야 함
+- db를 mongoose와 연결시켜 video model을 인식 시킴
+
+## <em>6.11~6.12 Our First Query</em>
+
+- server.js
+  - server 관련 코드만 처리
+-     init.js
+  - app에 필요한 모든 것들을 import 시키는 역할
+- mongoose model 사용방법
+  - Query func // https://mongoosejs.com/docs/queries.html
+    - Model.find() // 두 가지 사용법
+      - callback 활용
+        - js에서 기다림을 표현 하는 하나의 방법 - 실행과 동시에 적용되지 않음
+        - configuration과 호출할 func필요
+
+```javascript
+Video.find({}, (error, videos) => {
+  console.log("errors", error);
+  console.log("videos", videos);
+});
+// {}는 search terms을 뜻 함, 비어 있는 경우 모든 형식을 찾음
+// err와 docs라는 signature를 가짐
+```
+
+- promise 활용
