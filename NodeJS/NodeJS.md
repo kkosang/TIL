@@ -696,3 +696,125 @@ await Video.create({
   },
 });
 ```
+
+# _2022-07-15 FRI_
+
+## <em> 6.17 Exceptions and Validation</em>
+
+```javascript
+try {
+  // 오류가 없을 때 실행
+  await Video.create({});
+} catch (error) {
+  // 오류가 발생하면
+  return res.render("upload", {
+    // upload page에 errorMessage 렌더링
+    pageTitle: "Upload Video",
+    errorMessage: error._message,
+  });
+}
+```
+
+## <em> 6.18 More Schema </em>
+
+- String
+  - trim
+    - 단어 사이에 있는 하나의 공백을 제외하고 모든 공백을 제거
+  - min/maxLength
+    - 단어의 최소 길이와 최대 길이를 지정해줌
+    - 사용자와 해당 코드를 연결
+      - form에서 Min과 Max 설정
+      - 하나는 사용자를 위해 다른 하나는 DB를 위해 // 일종의 보안 구축
+
+## <em> 6.19 Video Detail </em>
+
+- regular expression
+  - Can be a 24 byte hex string
+  - /[0-9a-f]{24}
+- findOne
+  - 요청하는 모든 condition을 적용시켜줌
+- findById
+  - id로 영상을 찾을 수 있음
+
+## <em> 6.20~6.22 Edit Video </em>
+
+- 비디오가 존재 하지 않는 경우
+  - null인경우 처리
+
+```javascript
+if (video === null) {
+  // 에러체크를 먼저 할 것
+  return res.render("404", { pageTitle: "Video not found." });
+}
+return res.render("watch", { pageTitle: video.title, video });
+```
+
+- 주어진 array를 string으로 format하기
+  - .join()
+- 주어진 해쉬태그가 무엇으로 시작하는지 파악
+  - word.startsWith("#")
+- Id로 video를 찾고 update하기
+  - findByIdAndUpdate( )
+    - 2개의 argument
+    - 업데이트 하고자 하는 영상의 ID
+    - 업데이트 할 정보 혹은 내용
+- 존재하는지 파악 하기
+  - .exists( )
+    - argument로 filter
+    - 존재시 return true
+- object가 저장 되기 전에 처리 // 중복 파악등
+  - middleware사용
+
+## <em> 6.23 Middlewares </em>
+
+- mongoose middleware
+  - 반드시 model이 생성되기 전에 만들어야 함
+
+```javascript
+videoSchema.pre("save", async function () {
+  //save 되기 전에 실행
+});
+```
+
+- hashtags array의 첫 element 포맷
+
+```javascript
+this.hashtags = this.hashtags[0]
+  .split(",")
+  .map((word) => (word.startsWith("#") ? word : `#${word}`));
+```
+
+- mongo사용
+
+```mongo
+1. 몽고 사용하기
+
+> mongo
+
+2. 내가 가진 db 보기
+
+> show dbs
+
+3. 현재 사용 중인 db 확인
+
+> db
+
+4. 사용할 db 선택하기
+
+> use dbName
+(현재 수업에서는 `use wetube`)
+
+5. db 컬렉션 보기
+
+> show collections
+
+6. db 컬렉션 안에 documents 보기
+>
+ db.collectionName.find()
+(현재 수업에서는 `db.videos.find()`)
+
+7. db 컬렉션 안에 documents 내용 모두 제거하기
+
+> db.collectionName.remove({})
+(현재 수업에서는 `db.videos.remove({})`)
+```
