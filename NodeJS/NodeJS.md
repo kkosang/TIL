@@ -618,3 +618,81 @@ Video.find({}, (error, videos) => {
 ```
 
 - promise 활용
+
+# _2022-07-14 THU_
+
+## <em>6.13 Async Await </em>
+
+- promise
+  - callback의 최신 버전
+  - callback과의 차이점
+    - await를 find 앞에 적으면 find는 callback을 필요로 하지 않는다고 알게 됨
+    - await가 database를 기다려줌
+  - 규칙상 await는 func 안에서만 사용 가능
+    - 해당 func가 asynchronous 일 때만 가능
+
+```javascript
+export const home = async (req, res) => {
+  try {
+    const videos = await Video.find({});
+    return res.render("home", { pageTitle: "Home", videos: [] });
+  } catch {
+    return res.render("server-error");
+  }
+};
+// 코드 실행중 오류 발생시 await내 출력 값을 출력하지 않고 catch의 에러 출력코드 실행
+```
+
+## <em>6.14 Returns and Renders</em>
+
+- return이 아니라 실행되는 func들에 집중
+  - render뒤에 redirect 같은 func은 실행되지 않음
+
+## <em>6.15~6.16 Creating a Video</em>
+
+- document를 만들어 줘야함
+  - 데이터를 가진 비디오
+  - document를 db에 저장해야함
+- Data의 형태 미리 지정
+  - 데이터 타입의 유효성 검사를 도와줌
+  - 올바른 정보가 아니라면 자동으로 doc data에 포함되지 않음
+- .save()
+  - mongoose model에서 사용
+  - promise를 return 해줌 // save 작업이 끝날 때 까지 기다려야함
+  - save는 promise를 return하고 이걸 await하면 document가 return됨
+- mongo console
+  - show dbs
+    - db들을 보여줌
+  - use nameofdb
+  - show collections
+    - document들의 묶음을 보여줌
+- save방식과 create방식
+
+```javascript
+//save방식
+const video = new Video({
+  title,
+  description,
+  createdAt: Date.now(),
+  hashtags: hashtags.split(",").map((word) => `#${word}`),
+  meta: {
+    views: 0,
+    rating: 0,
+  },
+});
+await video.save();
+```
+
+```javascript
+//create방식
+await Video.create({
+  title,
+  description,
+  createdAt: Date.now(),
+  hashtags: hashtags.split(",").map((word) => `#${word}`),
+  meta: {
+    views: 0,
+    rating: 0,
+  },
+});
+```
