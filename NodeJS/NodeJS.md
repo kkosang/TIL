@@ -818,3 +818,82 @@ this.hashtags = this.hashtags[0]
 > db.collectionName.remove({})
 (현재 수업에서는 `db.videos.remove({})`)
 ```
+
+# _2022-07-18 MON_
+
+## <em> 6.24 Statics </em>
+
+- Static 생성하기
+  - Schema.static('staticName', func )
+
+```javascript
+videoSchema.static("formatHashtags", function (hashtags) {
+  return hashtags
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word}`));
+}); // 따로 export를 해줄 필요 없음
+```
+
+## <em> 6.25 Delete Video </em>
+
+- 템플릿
+  - watch.pug에서 Delete 링크 만들기
+
+```javascript
+    a(href=`${video.id}/delete`) Delete Video &rarr;
+```
+
+- 라우터
+  - videoRouter.js에서 라우터 만들기
+
+```javascript
+videoRouter.route("/:id([0-9a-f]{24})/delete").get(deleteVideo);
+```
+
+    - videoController에서 deleteVideo func만들기
+
+```javascript
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  await Video.findByIdAndDelete(id);
+  // findByIdAndDelete(id) (=findOneAndDelete({_id:id}))
+  // findByIdAndRemove는 아주 특별한 경우에만 사용
+  return res.redirect("/");
+};
+```
+
+## <em> 6.26~6.27 Search Video </em>
+
+- sort()
+  - 비디오를 정렬할 수 있음
+  - asc/desc : 오름차순/내림차순 정렬
+
+```javascript
+const videos = await Video.find({}).sort({ createdAt: "descending" });
+```
+
+- router와 controller 생성
+
+```javascript
+globalRouter.get("/search", search);
+import { search } from "";
+export const search = (req, res) => {
+  return res.render("search");
+};
+```
+
+- req.params
+  - id를 받을 수 있음
+- req.body
+  - form을 보내면 그 내용을 받을 수 있음
+- req.query
+
+  - url에 있는 모든 정보들을 input의 name을 통해 내용을 받을 수 있음
+
+- regular expression // $regex연산
+  - /welcome/ig
+  - g: global , i: ignore case // 대문자 무시
+  - /welcome$/ig
+  - welcome이라는 단어를 마지막에 포함한 단어만
+  - /^welcome/ig
+    - welcome이라는 단어를 처음에 포함한 단어만
