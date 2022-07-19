@@ -897,3 +897,86 @@ export const search = (req, res) => {
   - welcome이라는 단어를 마지막에 포함한 단어만
   - /^welcome/ig
     - welcome이라는 단어를 처음에 포함한 단어만
+
+# _2022-07-19 TUE_
+
+## <em> 6.28 Conclusions </em>
+
+## <em> 7.0~7.2 Create Accouont </em>
+
+- 유저생성 , 유저인증, 유저기억
+- 스키마 생성 => Mongo와 Mongoose에 User가 어떻게 생겼는지 알려줌 => static 만들고 => 모델 export
+
+- mongoose를 import
+
+```javascript
+import mongoose from "mongoose";
+```
+
+- 스키마 생성
+
+```javascript
+const userSchema = new mongoose.Schema({});
+```
+
+-     모델 생성 및 export
+
+```javascript
+const User = mongoose.model("User", userSchema);
+export default User;
+```
+
+- 회원가입 템플릿 생성
+
+  - 라우터에 get과 post
+  - 컨트롤러에 getJoin과 postJoin
+  - Join 템플릿
+  - input에 name이 있어야 백엔드에서 사용 가능
+
+- 유저 생성
+  - 컨트롤러에 user import
+  - 유저 create
+
+```javascript
+export const postJoin = async (req, res) => {
+  const { name, username, email, password, location } = req.body;
+  await User.create({
+    name,
+    username,
+    email,
+    password,
+    location,
+  });
+  res.end();
+};
+```
+
+- 유저를 로그인 페이지로 보내기
+  - rootRouter에 /login 만들기
+  - login페이지로 보내기
+
+```javascript
+return res.redirect("/login");
+```
+
+- 패스워드를 저장하기 전에 보안 처리
+  - password hashing
+    - 일방향 함수, 문자열 필요
+    - 같은 입력값으로는 항상 같은 출력값이 나옴 // deterministic function(결정적 함수)
+    - bcrypt사용
+
+```javascript
+// bcrypt import
+import bcrypt from "bcrypt";
+```
+
+    - .hash()
+    	- hash(data:any, saltRounds:string,callbackfunc) // 데이터값, 몇번 해싱할지, 콜백함수
+
+```javascript
+//	.pre 저장하기 전에 잠깐 가로채서 작업
+userSchema.pre("save", async function () {
+  this.password = await bcrypt.hash(this.password, 5);
+  //	this.password는 유저가 입력한 password를 뜻함
+});
+```
