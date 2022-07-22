@@ -980,3 +980,94 @@ userSchema.pre("save", async function () {
   //	this.password는 유저가 입력한 password를 뜻함
 });
 ```
+
+# _2022-07-22 FRI_
+
+## <em> 7.3 Form Validation </em>
+
+- duplicate key error
+
+  - 중복키 에러 // unique설정시 이미 존재하는 데이터를 저장할때 발생
+  - 에러 발생시 DB에 저장하기 전에 catch
+
+- Validation
+
+```javascript
+const usernameExists = await User.exists({ username });
+if (usernameExists) {
+  return res.render("join", {
+    pageTitle: "Join",
+    errorMessage: "This username is already taken.",
+  });
+}
+```
+
+- $or operator
+  - 각 조건이 true일 때 실행
+
+```javascript
+const exists = await User.exists({ $or: [{ username }, { email }] });
+// username이나 email중 하나라도 존재할 때
+```
+
+## <em> 7.4 Status Codes </em>
+
+- HTTP 상태코드
+
+  - 서버에 데이터를 요청시 요청에 대한 응답 코드
+  - 1xx(정보) : 요청을 받았으며 프로세스를 계속 진행합니다.
+  - 2xx(성공) : 요청을 성공적으로 받았으며 인식했고 수용하였습니다.
+  - 3xx(리다이렉션) : 요청 완료를 위해 추가 작업 조치가 필요합니다.
+  - 4xx(클라이언트 오류) : 요청의 문법이 잘못되었거나 요청을 처리할 수 없습니다. // 브라우저가 url 히스토리를 남기지 않음
+  - 5xx(서버 오류) : 서버가 명백히 유효한 요청에 대한 충족을 실패했습니다.
+
+- Validation error
+
+```javascript
+return res.status(400).render;
+```
+
+## <em> 7.5~7.6 Login </em>
+
+- join 템플릿에서 login 템플릿으로 가는 링크 만들기
+
+```pug
+a(href="/login") Log in now &rarr;
+```
+
+- login 템플릿 render
+  - user컨트롤러에서 render
+
+```javascript
+export const getLogin = (req, res) => res.render("login", { pageTitle: Login });
+```
+
+- login 템플릿에서 post 요청시
+  - post 컨트롤러 생성
+  - Username을 가진 User가 있는지 확인
+
+```javascript
+const exists = await User.exists({ username });
+if (!exists) {
+  return res.status(400).render("login", {
+    pageTitle: "Login",
+    errorMessage: "An account with this username does not exists.",
+  });
+}
+```
+
+    - password가 일치하는지 확인
+    	- 로그인시 입력한 패스워드를 해싱해서 DB에 있는 해시값과 비교
+    	- bcrypt에 내장되어 있는 .compare 함수 이용
+
+```javascript
+import bcrypt from "bcrypt";
+```
+
+    	- .compare( ) // arg1 : 유저가 입력한 패스워드 값, arg2 : DB에 있는 패스워드 값
+
+```javascript
+const ok = await bcrypt.compare(password, user.password);
+```
+
+    	- 유저가 로그인하려는 계정이 뭔지 알아야함
