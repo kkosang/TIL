@@ -414,3 +414,51 @@ public class ValScopeExam{
       }
   }
   ```
+
+## <em> 클래스 형변환 </em>
+
+- 부모타입으로 자식객체를 참조하게 되면 부모가 가지고 있는 메소드만 사용할 수 있음
+- 자식객체가 가지고 있는 메소드나 속성을 사용하고 싶으면 형변환을 해야 함
+- 형변환
+
+  ```java
+      public class Car{
+      public void run(){
+          System.out.println("Car의 run메소드");
+      }
+  }
+
+  public class Bus extends Car{
+      public void ppangppang(){
+          System.out.println("빵빵.");
+      }
+  }
+  ```
+
+  - 부모타입으로 자식객체 참조
+
+    - 부모타입으로 자식객체를 참조하게 되면 부모가 가지고 있는 메소드만 사용가능
+
+      ```java
+       public class BusExam{ public static void main(String args[]){ Car car = new Bus(); // 부모타입으로 자식객체 참조 car.run(); car.ppangppang(); // 컴파일 오류 발생 } } // ppangppang은 자식객체 메소드
+      ```
+
+    - ppangppang() 메소드를 호출하고 싶다면 Bus타입의 참조변수로 참조해야 함
+
+      ```java
+      public class BusExam{
+      public static void main(String args[]){
+      Car car = new Bus();
+      car.run();
+      //car.ppangppang(); // 컴파일 오류 발생
+
+              Bus bus = (Bus)car;  //부모타입을 자식타입으로 형변환
+              bus.run();
+              bus.ppangppang();
+          }
+
+      }
+       // 객체들 끼리도 형변환이 가능하지만, 상속관계에 있을때만 가능
+       // 부모타입으로 자식타입의 객체를 참조할 때는 묵시적으로 형변환이 일어남
+       // 부모타입의 객체를 자식타입으로 참조할 때는 명시적으로 형변환 해줘야 함
+      ```
