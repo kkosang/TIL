@@ -698,3 +698,53 @@ public class ValScopeExam{
     - 괄호 안에는 메소드를 구현하거나 메소드를 추가할 수 있다. 이렇게 생성된 이름 없는 객체를 action이라는 참조변수가 참조하도록 하고, exec()메소드를 호출함
     - 익명클래스를 만드는 이유는 Action을 상속받는 클래스를 만들 필요가 없을 경우
     - Action을 상속받는 클래스가 해당 클래스에서만 사용되고 다른 클래스에서는 사용되지 않는 경우
+
+# _2022-12-07 WED_
+
+## <em> Exception </em>
+
+- 프로그램 실행 중 예기치 못한 사건을 예외라고 함
+- 예외 상황을 미리 예측하고 처리하는 것을 예외 처리라고 함
+
+  ```java
+      public class ExceptionExam {
+      public static void main(String[] args) {
+          int i = 10;
+          int j = 5;
+          int k = i / j;
+          System.out.println(k);
+          System.out.println(main 종료!!);
+      }
+  }
+  // j를 0으로 바꾸면 Exception 발생
+  // j를 0으로 바꾸면 ArithmeticException 발생하면서 프로그램 종료
+  // 정수를 정수로 나눌 때 0으로 나누면 오류 발생
+
+  ```
+
+- 예외처리하는 문법
+  - 오류가 발생할 예상 부분을 try{} 블록으로 감싼 후, 발생할 오류와 관련된 Exception을 catch라는 블록에서 처리함
+  - 오류와 상관없이 무조건 실행되는 finally라는 블록을 가질 수 있음
+  - finally{}는 생략가능
+
+```java
+     public class ExceptionExam {
+        public static void main(String[] args) {
+            int i = 10;
+            int j = 0;
+            try{
+                int k = i / j;
+                System.out.println(k);
+            }catch(ArithmeticException e){
+                System.out.println("0으로 나눌 수 없습니다. : " + e.toString());
+            }finally {
+                System.out.println("오류가 발생하든 안하든 무조건 실행되는 블록입니다.");
+            }
+        }
+    }
+    // 실행결과 : 0으로 나눌 수 없습니다 와 finally {} 블록
+```
+
+- 예외처리를 하지 않으면 프로그램 강제 종료
+- try{}에서 여러종류의 Exception이 발생한다면 catch{}을 여러개 둘 수 있음
+- Exception클래스들은 모두 Exception클래스를 상속받으므로, 예외클래스에 Exception을 두게 되면 어떤 오류가 발생하든지 간에 하나의 catch블록에서 모든 오류처리 가능
