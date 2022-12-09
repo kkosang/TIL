@@ -748,3 +748,164 @@ public class ValScopeExam{
 - 예외처리를 하지 않으면 프로그램 강제 종료
 - try{}에서 여러종류의 Exception이 발생한다면 catch{}을 여러개 둘 수 있음
 - Exception클래스들은 모두 Exception클래스를 상속받으므로, 예외클래스에 Exception을 두게 되면 어떤 오류가 발생하든지 간에 하나의 catch블록에서 모든 오류처리 가능
+
+# _2022-12-09 FRI_
+
+## <em> Throws </em>
+
+- 예외가 발생했을 때 method내에서가 아니라 호출한 쪽에서 처리하도록 함
+
+```java
+    public class ExceptionExam2 {
+        public static void main (String[] args){
+            int i=10;
+            int j=0;
+            int k = divide(i,j);
+            System.out.println(k);
+        }
+
+        public static int divide(int i,int j) throws ArithmeticException{
+            int k= i/j;
+            return k;
+        }
+        // divide메소드는 ArithmeticException이 발생하니 divide메소드를 호출하는 쪽에서 오류를 처리
+    }
+```
+
+```java
+    package javaStudy;
+    public class ExceptionExam2 {
+
+        public static void main(String[] args) {
+            int i = 10;
+            int j = 0;
+            try{
+                int k = divide(i, j);
+                System.out.println(k);
+            } catch(ArithmeticException e){
+                System.out.println("0으로 나눌수 없습니다.");
+            }
+
+        }
+
+        public static int divide(int i, int j) throws ArithmeticException{
+            int k = i / j;
+            return k;
+        }
+
+    }
+```
+
+## <em> Exception 발생시키기 </em>
+
+- 강제로 오류를 발생시키는 throw
+- throw는 오류를 떠넘기는 throws와 보통 같이 사용
+
+```java
+    public class ExceptionExam3 {
+        public static void main(String args[]){
+            int i=10;
+            int j=0;
+            int k = divide(i,j);
+            System.out.println(k);
+        }
+        public static int divide(int i,int j){
+            if(j==0){
+                System.out.println("2번째 매개변수가 0일 수 없습니다");
+                return 0;
+            }
+            int k=i/j;
+            return k;
+        }
+        // k변수의 값은 0
+        // 0으로 나눈 결과는 0이 아님
+    }
+```
+
+```java
+    // 오류를 발생하지 않고, 올바른 결과를 리턴
+    public class ExceptionExam3{
+        public static void main(String[] args){
+            int i=10;
+            int j =0;
+            int k = divide(i,j);
+        }
+        public static int divide(int i, int j) throws IllegalArgumentException{
+            if(j==0)
+            {
+                throw new IllegalArgumentException("0으로 나눌 수 없음");
+            }
+            int k= i/j;
+            return k;
+        }
+    }
+    // j가 0일 경우에 new 연산자를 통해 IllegalArgumentException 객체 만들어짐
+    // new 앞에 throw는 해당 라인에서 익셉션이 발생한다는 의미
+    // 익셉션 클래스 이름을 통해 Argument가 잘못되어서 발생한 오류라는 것을 알 수 있음
+
+```
+
+```java
+    // divide 메소드를 호출 한 쪽에서 오류처리
+          public static void main(String[] args) {
+            int i = 10;
+            int j = 0;
+            try{
+                int k = divide(i, j);
+                System.out.println(k);
+            }catch(IllegalArgumentException e){
+                System.out.println("0으로 나누면 안됩니다.");
+            }
+        }
+```
+
+## <em> 사용자 정의 Exception </em>
+
+- Exception 클래스를 상속 받아 정의한 checked Exception
+  - 반드시 오류 처리를 해야만 하는 Exception
+  - 예외 처리를 하지 않으면 컴파일 오류 발생
+- RuntimeException 클래스를 상속 받아 정의한 unChecked Exception
+
+  - 예외 처리를 하지 않아도 컴파일 시에는 오류를 발생시키지 않음
+
+- RuntimeException을 상속받은 BizException 객체
+
+  ```java
+      public class BizException extends RuntimeException{
+          // 생성자 2개
+          public BizException(String msg){
+              super(msg);
+          }
+          public BizException(Exception ex){
+              super(ex);
+          }
+      }
+  ```
+
+- BizService클래스는 업무를 처리하는 메소드를 가지고 있다고 가정
+
+  ```java
+      public class BizService{
+          public void bizMethod(int i) throws BizException{
+            System.out.println("로직 시작");
+          if(i<0)
+              throw new BizException("매개변수 i는 0이상이어야 함");
+          System.out.println("로직 종료");
+          }
+      }
+  ```
+
+- BizService를 이용하는 BizExam 클래스
+  ```java
+  public class BizExam{
+      public static void main(String[] args){
+          BizService biz = new BizService();
+          biz.bizMethod(5);
+          try(
+              biz.bizMethod(-3);
+          )catch(Exception ex){
+              ex.printStackTrace();
+          }
+      }
+  }
+  ```
