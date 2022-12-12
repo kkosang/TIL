@@ -909,3 +909,131 @@ public class ValScopeExam{
       }
   }
   ```
+
+# _2022-12-12 MON_
+
+## <em> Object와 오버라이딩 </em>
+
+- Object클래스는 모든 클래스의 최상위 클래스
+- 아무것도 상속받지 않으면 자동으로 Object를 상속
+- Object가 가지고 있는 메소드는 모든 클래스에서 다 사용할 수 있음
+- 일반적으로 객체를 출력할 때는 Object의 toString(); 사용
+
+## <em> java.lang패키지와 오토박싱/언박싱 </em>
+
+- java.lang패키지의 클래스는 import하지 않고도 사용 가능
+- java.lang패키지에는 기본형 타입을 -> 객체로 변환시킬 때 사용하는 Wrapper 클래스가 있음
+  - Boolean, Byte, Short, Integer, Long, Float, Double
+- 모든 클래스의 최상위 클래스인 Object도 java.lang 패키지
+- 문자열과 관련된 String, StringBuffer, StringBuilder도 모두 java.lang패키지
+- System클래스도 java.lang패키지
+- Math클래스도 java.lang패키지
+- Thread와 관련된 중요 클래스들이 java.lang패키지
+- 이외에도 다양한 클래스와 인터페이가 java.lang패키지에 속함
+
+```java
+    public class WrapperExam{
+        public static void main(String[] args){
+            int i =5;
+            Integer i2 = new Integer(5); // 숫자 5를 Integer형태로 형변환
+            Integer i3 =5 ; // 오토박싱
+            int i4 = i2.intValue();
+            int i5 = i2; // 오토 언박싱
+
+        }
+    }
+    // Auto Boxing : 기본형 숫자 5를 자동으로 Integer형태로 변환
+    // Auto unBoxing : Integer객체타입의 값을 기본형 int 로 자동 변환
+
+```
+
+## <em> 스트링버퍼 클래스 </em>
+
+- 아무 값도 가지고 있지 않은 StringBuffer 객체를 생성
+
+  ```java
+    StringBuffer sb = new StringBuffer();
+
+    // 해당 스트링 버퍼에 "hello", 공백, "world"를 차례로 추가
+
+    sb.append("hello");
+    sb.append(" ");
+    sb.append("world");
+
+    // StringBuffer에 추가된 값을 toString() 메소드를 이용하여 반환
+
+    String str = sb.toString();
+
+    // 출력결과 : hello world
+  ```
+
+- StringBuffer가 가지고 있는 메소드들은 대부분 자기 자신, this를 반환
+  ```java
+    StringBuffer sb2 = new StringBuffer();
+    StringBuffer sb3 = sb2.append("hello");
+    if(sb2==sb3){
+        System.out.println("sb2==sb3");
+    }
+  ```
+  - 자기 자신의 메소드를 호출하여 자기 자신을 return하여 값을 바꿔 나가는것을 메소드체이닝이라고 한다
+  - StringBuffer클래스는 메소드 체인 방식으로 사용가능
+    ```java
+    String str2 = new StringBuffer().append("hello").append(" ").append("world").toString();
+    System.out.println(str2);
+    ```
+
+## <em> 스트링 클래스의 문제점 </em>
+
+- String 클래스는 문자열을 다룰 때 사용하는 클래스
+- String 클래스는 불변클래스이다
+
+```java
+    String str1 = "hello world";
+    String str2 = str1.substring(5);
+    System.out.println(str1);
+    System.out.println(str2);
+
+    // 출력 결과
+    hello world
+     world
+    // 기존의 str1은 전혀 변화 없음
+    // substring은 5번째부터 문자열 잘라서 새로운 문자열 반환
+```
+
+```java
+    String str3 = str1 + str2;
+    System.out.println(str3);
+
+    // 새로운 문자열을 만들어서 (new) 반환하기 때문에 성능상 문제
+```
+
+- 문자열과 문자열을 더하게 되면 내부적으로는 다음과 같은 코드 실행
+
+```java
+    String str4 = new StringBuffer().append
+    (str1).append(str2).toString();
+
+    // 반복문을 사용할 경우,
+    // 매번 new 를 사용해서 String 객체를 만들어 내기 때문에 속도가 느려짐
+```
+
+- 문자열을 반복문 안에서 더하는 것은 성능상 문제가 생길 수 있음
+
+## <em> Math 클래스 </em>
+
+- 수학계산을 위한 클래스
+- cos, sin, tan, abs, random등의 메소드가 있음
+- Math 클래스는 생성자가 private으로 되어 있기 때문에 new 연산자를 이용하여 객체 생성 불가
+- 객체를 생성할 수는 없지만 모든 메소드와 속성이 static으로 정의되어 있어 객체를 생성하지 않고 바로 사용 가능
+
+```java
+    public class MathExam{
+        public static void main(String[] args){
+            int val1 = Math.max(5,20);
+            int val2 = Math.min(5,-5);
+            int val3 = Math.abs(-5);
+            double val4 = Math.random(); // double형으로 0에서 1.0사이의 랜덤값 return
+            double val5 = Math.sqrt(25); // double형으로 제곱근을 return
+        }
+    }
+```
