@@ -1189,3 +1189,160 @@ public class ValScopeExam{
         }
     }
 ```
+
+# _2022-12-29 THU_
+
+## <em> List </em>
+
+- 배열과 유사하지만 배열은 크기 선언시 변경 불가
+- 리스트는 필요에 따라 저장공간 자유
+- list의 data는 중복이 있을 수 있고, 순서도 있음
+- 따라서 index를 이용할 수 있음
+
+```java
+    public class ListExam{
+        public static void main (String[] args){
+            List<String> list = new ArrayList<>(); // interface list
+            list.add("kim");
+            list.add("ko");
+            list.add("kim");
+
+            System.out.println(list.size());
+
+            for(int i=0; i< list.size(); i++){
+                String str = list.get(i);
+                System.out.println(str);
+            }
+        }
+    }
+```
+
+## <em> Map </em>
+
+- key와 value를 쌍으로 저장하는 자료구조
+- key값은 중복이 될 수 없고, value는 중복 될 수 있음
+
+```java
+    public class MapExam {
+        public static void main (String[] args){
+            Map<String,String> map = new HashMap<>(); // generic으로 key값과 value값 모두 string타입인 HashMap 인스턴스를 만듬
+
+            // map에 값을 저장하기 위해 put사용
+            map.put("001","ko");
+            map.put("002","sang");
+            map.put("003", "kim");
+
+            map.put("003","hyun"); // key값은 중복이 될 수 없기에 003, kim이 003 hyun으로 변경
+
+            System.out.println(map.size()); // map의 자료의 수 3이 출력
+
+            // 키 값을 이용해 value 출력하기 위해 get 사용
+            System.out.println(map.get("001"));
+            System.out.println(map.get("002"));
+            System.out.println(map.get("003"));
+
+            // map에 저장된 모든 key들을 Set자료구조로 꺼냄
+            Set<String> keys = map.keySet();
+            // Set자료구조에 있는 모든 key를 꺼내기 위하여 Iterator를 구함
+            Iterator<String> iter = keys.iterator();
+            while(iter.hasNext()){
+                // key를 꺼냄
+                String key = iter.next();
+                // key에 해당하는 value를 꺼냄
+                String value = map.get(key);
+                // key와 value값 출력
+                System.out.println( key + ":" + value);
+            }
+        }
+    }
+
+```
+
+## <em> Date </em>
+
+- 날짜와 시간을 구하기 위한 Date클래스
+- Date 클래스는 JDK 1.0에 만들어져서 지역화에 대한 부분이 고려되지 않음
+- Date 클래스의 대부분 생성자와 메소드가 Deprecated되어 있음
+  - 앞으로 지원을 안하거나 문제가 발생 할 수 있으니 사용 x
+- 기본 생성자를 이용한 Date클래스 생성
+  ```java
+    Date date = new Date();
+  ```
+- toString()을 이용하여 현재 시간을 문자열로 구할 수 있음
+  ```java
+    System.out.println(date.toString());
+  ```
+- java.util.SimpleDateFormat 클래스를 이용해서 원하는 형태로 출력
+  - yyyy 년 MM 월 , dd 일을 표현
+  - hh 시간, mm 분, ss 초, a 오전/오후 표현
+  - zzz Time Zone, 한국의 경우 KST로 나옴
+  ```java
+      SimpleDateFormat ft =  new SimpleDateFormat ("yyyy.MM.dd 'at' hh:mm:ss a zzz");
+      System.out.println(ft.format(date));
+  ```
+- 현재 시간을 long으로 구함
+  ```java
+    System.out.println(date.getTime());
+    // System이 가지고 있는 currentTimeMillis()메소드를 이용해도 됨
+    long today = System.currentTimeMillis();
+    System.out.println(today);
+  ```
+
+## <em> Calendar </em>
+
+- Date의 단점을 해결함
+- 생성 방법
+  - 추상클래스이다
+  - Calendar 클래스에 대한 인스턴스를 생성하려면 getInstance() 메소드를 사용
+  - getInstance()메소드는 java.util.GregorianCalendar 인스턴스를 만들어서리턴
+  - GregorianCalendar는 Calendar의 자식 클래스임
+  ```java
+    Calendar cal = Calendar.getInstance();
+  ```
+- 현재 날짜와 시간 정보
+  ```java
+      int yyyy = cal.get(Calendar.YEAR);
+      int month = cal.get(Calendar.MONTH) + 1; // 월은 0부터 시작합니다.
+      int date = cal.get(Calendar.DATE);
+      int hour = cal.get(Calendar.HOUR_OF_DAY);
+      int minute = cal.get(Calendar.MINUTE);
+  ```
+- 원하는 날짜나 시간 정보
+  - add사용
+  ```java
+    cal.add(Calendar.HOUR,5); // -5는 5시간전
+  ```
+
+## <em> java.time 패키지 </em>
+
+- 새롭게 재 디자인한 Date,Time API를 Java SE 8부터 제공
+- 새로운 API의 핵심 클래스는 오브젝트를 생성하기 위해 다양한 factory 메서드를 사용
+- 오브젝트 자기 자신의 특정 요소를 가지고 오브젝트를 생성할 경우 of 메서드를 호출, 다른 타입으로 변경할 경우에는 from 메서드 호출
+- LocalDateTime 클래스를 이용해서 현재 시간 time 객체 만드는 방법
+  ```java
+    LocalDateTime timePoint = LocalDateTime.now(); // 현재의 날짜와 시간 now는 현재 시간을 구한다
+  ```
+- 원하는 시간으로 time 객체 생성 방법
+
+  ```java
+    // 2022년 12월 22일의 시간에 대한 정보를 가지는 LocalDate객체를 만드는 방법
+    LocalDate ld1 = LocalDate.of(2022, Month.DECEMBER, 22); // 2022-12-22 from values
+
+        // 17시 18분에 대한 LocalTime객체를 구함
+    LocalTime lt1 = LocalTime.of(17, 18); // 17:18 (17시 18분)the train I took home today
+
+    // 10시 15분 30초라는 문자열에 대한 LocalTime객체를 구함
+    LocalTime lt2 = LocalTime.parse("10:15:30"); // From a String
+  ```
+
+- 현재와 날짜와 시간 정보를 getter메소드를 이용하는 방법
+  ```java
+    LocalDate theDate = timePoint.toLocalDate();
+    Month month = timePoint.getMonth();
+    int day = timePoint.getDayOfMonth();
+    int hour = timePoint.getHour();
+    int minute = timePoint.getMinute();
+    int second = timePoint.getSecond();
+    // 달을 숫자로 출력한다 1월도 1부터 시작하는 것을 알 수 있음
+    System.out.println(month.getValue() + "/" + day + "  " + hour + ":" + minute + ":" + second);
+  ```
