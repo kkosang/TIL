@@ -150,3 +150,68 @@
   ```
 
 ## <em> 다양한 타입의 입력 </em>
+
+- data.dat로부터 값을 읽어들여 화면에 출력하는 클래스
+- 다양한 타입의 데이터를 읽어낼 수 있는 DataInputStream
+  - readInt() - 정수를 읽어들이는 메소드
+  - readBoolean() - boolean 값을 읽어들이는 메소드
+  - readDouble() - double 값을 읽어들이는 메소드
+
+```java
+    import java.io.DataInputStream;
+    import java.io.FileInputStream;
+
+    public class ByteIOExam4{
+
+        public static void main(String[] args){
+            try(
+                DataInputStream out = new DataInputStream(new FileInputStream("data.txt"));
+            ){
+                // 파일에 저장된 순서대로 읽어야 함
+                int i = out.readInt();
+                boolean b = out.readBoolean();
+                double d = out.readDouble();
+
+                System.out.println(i);
+                System.out.println(b);
+                System.out.println(d);
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+```
+
+- 파일에 저장된 순서대로 읽어야 함
+  - 파일에 int,boolean,double 순서대로 저장하였기 때문에 읽어들일 때도 같은순서로 읽어야 함
+
+## <em> Char 단위 입출력(Console) </em>
+
+- char단위 입출력 클래스는 클래스 이름이 Reader나 Writer로 끝남
+- char단위 입출력 클래스를 이용해서 키보드로부터 한줄 입력 받아서 콘솔에 출력
+  - System.in - 키보드를 의미, 타입은 (InputStream);
+  - BufferedReader - 한줄씩 입력 받기위한 클래스
+  - BufferedReader 클래스의 생성자는 InputStream을 입력받는 생성자가 없음, (Reader) 객체만 받을 수 있음 // System.in을 Reader의 형태로 바꿔야 함
+  - System.in은 InputStream 타입이므로 BufferedReader의 생성자에 바로 들어갈 수 없으므로 InputStreamReader 클래스를 이용해야 함
+    - InputStreamReader는 Reader를 상속받고 있으므로 Reader, 타입은 (InputStream)
+  ```java
+    import java.io.BufferedReader;
+    import java.io.FileWriter;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.io.PrintWriter;
+    public class CharIOExam01{
+        public static void main(String[] args){
+            BufferReader br = new BufferReader(new InputStreamReader(System.in));
+            // 키보드로 입력받은 문자열을 저장하기 위해 line변수 선언
+            String line = null;
+            try{
+                line = br.readLine();
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+            // 콘솔에 출력
+            System.out.println(line);
+        }
+    }
+  ```
