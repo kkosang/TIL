@@ -1,4 +1,4 @@
-<h2> Selection Sort </h2>
+<h2> Bubble Sort </h2>
 <em>Abstract</em>
 
      Selection Sort와 유사한 알고리즘으로 서로 인접한 두 원소의 대소를 비교하고, 조건에 맞지 않다면 자리를 교환하며 정렬하는 알고리즘
