@@ -12,7 +12,7 @@
 <em>Java Code</em>
 
 ```java
- public static void selectionSort(int[] arr) {
+ public static void bubbleSort(int[] arr) {
         for (int i = 1; i < arr.length ; i++) {
             /* 비교횟수는 배열의 크기에서 i번 횟수를 뺌*/
             for(int j =0; j<arr.length-i;j++){
