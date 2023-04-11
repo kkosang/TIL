@@ -1,5 +1,6 @@
 # <em> StringBuffer와 StringBuilder </em>
 
+- StringBuffer와 StringBuilder는 문자열을 변경하고 관리하는 클래스이다.
 - 자바에서 String이외에도 StringBuffer와 StringBuilder가 있다.
 - String은 불변(immutable)하기 때문에 값을 변경할 수 없다.
   - .concat이나 +를 이용하는 것은 값을 변경하는게 아닌, 기존에 있던 String값을 버리고 새로운 값을 할당하는 것이다.
