@@ -20,15 +20,51 @@
     }
   ```
 
-- for each문을 사용하여 배열 탐색
+- 기본구조
 
   ```java
-    int [] arr={0,1,2,3,4};
+  for( 각 요소 값 : 배열이나 컨테이너 값 )
+  {
 
-    for(int i:arr){
-        System.out.println(arr[i]);
-    }
+     반복 수행할 작업
+
+  }
   ```
+
+- for each문을 사용하여 배열 탐색
+
+```java
+  int [] arr={0,1,2,3,4};
+
+  for(int i:arr){
+      System.out.println(arr[i]);
+  }
+```
+
+- for each문에서 2차원배열 탐색하기
+
+```java
+   /*arr[][] = {{1,1,1},
+                {2,2,2},
+                {3,3,3},
+                {4,4,4}
+                }
+    */
+   for( int[]p : arr){
+      for(int q : p){
+        System.out.print(q+" ");
+      }
+      System.out.println("");
+   }
+
+   // 먼저 1차원 배열과 똑같이 arr의 배열의 아이템을 하나씩 꺼냄, {1,1,1} , {2,2,2}, ..이 전부 p[]에 담긴다, p를 q로 하나씩 빼낸다.
+
+   // 출력형태
+   1 1 1
+   2 2 2
+   3 3 3
+   4 4 4
+```
 
 ## <em> 장점 </em>
 
